@@ -1,7 +1,7 @@
 {
   "api_keys": {
     "gemini_api_key": "YOUR_GEMINI_API_KEY_HERE_OR_LEAVE_BLANK_IF_USING_ENV",
-    "openai_api_key": "YOUR_OPENAI_API_KEY_HERE",
+    "openai_api_key": "",
     "azure_openai_api_key": "YOUR_AZURE_OPENAI_API_KEY_HERE",
     "azure_openai_endpoint": "YOUR_AZURE_OPENAI_ENDPOINT_HERE",
     "azure_openai_deployment": "YOUR_AZURE_OPENAI_DEPLOYMENT_NAME_HERE",
@@ -53,8 +53,21 @@
     }
   },
   "logging": {
-    "level": "INFO",
-    "format": "%(asctime)s - %(levelname)s - %(module)s - %(message)s"
+    "level": "DEBUG",
+    "format": "%(asctime)s - %(levelname)s - %(module)s - %(message)s",
+    "propagate": true,
+    "console_handler": {
+      "enabled": true,
+      "level": "INFO"
+    },
+    "file_handler": {
+      "enabled": true,
+      "path": "logs/app.log",
+      "level": "DEBUG",
+      "rotation_type": "size",
+      "max_bytes": 10485760,
+      "backup_count": 5
+    }
   },
   "browser_settings": {
     "type": "firefox",

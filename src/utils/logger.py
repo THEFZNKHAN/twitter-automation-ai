@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 from typing import Optional
 
+logger = logging.getLogger(__name__)
+
 # Adjust import path for ConfigLoader
 try:
     from ..core.config_loader import ConfigLoader

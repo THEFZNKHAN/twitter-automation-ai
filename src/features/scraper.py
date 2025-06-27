@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger(__name__)
+
 import os
 import sys
 import time
@@ -307,12 +310,17 @@ class TweetScraper:
     def scrape_tweets_from_profile(self, profile_url: str, max_tweets: Optional[int] = None) -> List[ScrapedTweet]:
         # Profile URL is typically https://x.com/USERNAME
         return self.scrape_tweets_from_url(profile_url, "profile", max_tweets)
-
+    
     def scrape_tweets_by_hashtag(self, hashtag: str, max_tweets: Optional[int] = None) -> List[ScrapedTweet]:
-        # Hashtag URL: https://x.com/hashtag/HASHTAG?f=live
         clean_hashtag = hashtag.lstrip('#')
         hashtag_url = f"https://x.com/hashtag/{clean_hashtag}?f=live"
         return self.scrape_tweets_from_url(hashtag_url, "hashtag", max_tweets)
+
+    def scrape_tweets_by_mention(self, mention: str, max_tweets: Optional[int] = None) -> List[ScrapedTweet]:
+        """Scrape tweets mentioning a specific handle (e.g., '@cashify'), excluding tweets from that handle."""
+        search_query = f"%40{mention} -from:%40{mention}"
+        search_url = f"https://x.com/search?q={search_query}&f=live"
+        return self.scrape_tweets_from_url(search_url, "mention", max_tweets)
 
 
 if __name__ == '__main__':

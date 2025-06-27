@@ -65,26 +65,20 @@ class ActionConfig(BaseModel): # This can be global or per-account
 
 
 class AccountConfig(BaseModel):
-    account_id: str # e.g., username or a unique ID
+    account_id: str
     is_active: bool = True
-    # Cookies can be a list of cookie objects or a path to a JSON file containing them
-    cookies: Optional[List[AccountCookie]] = None 
-    cookie_file_path: Optional[str] = None # Relative to config dir or absolute
-    
-    # Optional: For username/password login if implemented
+    cookies: Optional[List[AccountCookie]] = None
+    cookie_file_path: Optional[str] = None
     username: Optional[str] = None
-    password: Optional[str] = None # Consider storing this securely, e.g. env var or encrypted
-
-    # Account-specific settings for content sources (these are now the primary source, not overrides)
+    password: Optional[str] = None
     target_keywords: Optional[List[str]] = Field(default_factory=list, description="Keywords specific to this account for targeting.")
     competitor_profiles: Optional[List[HttpUrl]] = Field(default_factory=list, description="Competitor profiles specific to this account.")
     news_sites: Optional[List[HttpUrl]] = Field(default_factory=list, description="News sites specific to this account.")
     research_paper_sites: Optional[List[HttpUrl]] = Field(default_factory=list, description="Research paper sites specific to this account.")
-    
-    # Account-specific LLM preferences (general override for all actions for this account)
     llm_settings_override: Optional[LLMSettings] = Field(None, description="General LLM settings override for this account.")
-    # Account-specific action configurations (can include action-specific LLM settings)
     action_config: Optional[ActionConfig] = Field(None, description="Specific action configurations for this account. Overrides global action_config.")
+    target_companies: Optional[List[str]] = Field(default_factory=list, description="Companies to target for mentions.")
+    reply_settings: Optional[Dict[str, Any]] = Field(None, description="Settings for automated replies.")
 
 
 class TweetContent(BaseModel):
